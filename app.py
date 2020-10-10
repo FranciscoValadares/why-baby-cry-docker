@@ -1,7 +1,4 @@
 #deep learning libraries
-from fastai.vision import *
-from fastai.learner import *
-
 import torch
 defaults.device = torch.device('cpu')
 
@@ -12,6 +9,7 @@ import uvicorn
 import aiohttp
 import asyncio
 import joblib
+import fastai
 
 import os
 import sys
