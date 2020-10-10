@@ -21,8 +21,8 @@ async def get_bytes(url):
             return await response.read()
 
 app = Starlette()
-path = Path('')
-learner = load_learner(path)
+# path = Path('')
+# learner = load_learner(path)
 
 pkl_filename = "joblib_model.pkl"
 file = open(pkl_filename,'rb')
@@ -32,42 +32,24 @@ pickle_model = joblib.load(file)
 @app.route("/upload", methods = ["POST"])
 async def upload(request):
     data = await request.form()
-    bytes = await (data["file"].read())
-    return predict_audio_from_bytes(bytes)
+    wav_file = await (data["file"])
+    return predict_audio_from_bytes(wav_file)
 
 @app.route("/classify-url", methods = ["GET"])
 async def classify_url(request):
     bytes = await get_bytes(request.query_params["url"])
     return predict_audio_from_bytes(bytes)
 
-def predict_audio_from_bytes(bytes):
-    #load byte data into a stream
-    img_file = io.BytesIO(bytes)
-    #encoding the image in base64 to serve in HTML
-    img_pil = Image.open(img_file)
-    img_pil.save("img.jpg", format="JPEG")
-    img_uri = base64.b64encode(open("img.jpg", 'rb').read()).decode('utf-8')
-    
-    #make inference on image and return an HTML response
-    img = open_image(img_file)
-    pred_class, pred_idx, outputs = learner.predict(img)
-    formatted_outputs = ["{:.1f}%".format(value) for value in [x * 100 for x in torch.nn.functional.softmax(outputs, dim = 0)]]
-    pred_probs = sorted(zip(learner.data.classes, map(str, formatted_outputs)),
-                        key = lambda p: p[1],
-                        reverse = True
-                       )
+def predict_audio_from_bytes(wav_file):
+    resultado = pickle_model.predict(wav_file) 
     return HTMLResponse(
         """
         <html>
             <body>
                 <p> Prediction: <b> %s </b> </p>
-                <p> Confidence: <b> %s </b> </p>
             </body>
-        <figure class = "figure">
-            <img src="data:image/png;base64, %s" class = "figure-img">
-        </figure>
         </html>
-        """ %(pred_class, pred_probs, img_uri))
+        """ %(resultado))
         
 @app.route("/")
 def form(request):
