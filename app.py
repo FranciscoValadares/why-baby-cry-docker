@@ -1,6 +1,4 @@
 #deep learning libraries
-import torch
-defaults.device = torch.device('cpu')
 
 #web frameworks
 from starlette.applications import Starlette
@@ -14,12 +12,6 @@ import fastai
 import os
 import sys
 import base64 
-from PIL import Image
-
-async def get_bytes(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            return await response.read()
 
 app = Starlette()
 # path = Path('')
