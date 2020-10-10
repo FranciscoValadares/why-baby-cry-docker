@@ -18,7 +18,7 @@ app = Starlette()
 # path = Path('')
 # learner = load_learner(path)
 
-pkl_filename = "joblib_model.pkl"
+pkl_filename = "export.pkl"
 file = open(pkl_filename,'rb')
 pickle_model = joblib.load(file)
 
