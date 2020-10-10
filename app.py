@@ -24,18 +24,23 @@ app = Starlette()
 path = Path('')
 learner = load_learner(path)
 
+pkl_filename = "joblib_model.pkl"
+file = open(pkl_filename,'rb')
+pickle_model = joblib.load(file)
+
+
 @app.route("/upload", methods = ["POST"])
 async def upload(request):
     data = await request.form()
     bytes = await (data["file"].read())
-    return predict_image_from_bytes(bytes)
+    return predict_audio_from_bytes(bytes)
 
 @app.route("/classify-url", methods = ["GET"])
 async def classify_url(request):
     bytes = await get_bytes(request.query_params["url"])
-    return predict_image_from_bytes(bytes)
+    return predict_audio_from_bytes(bytes)
 
-def predict_image_from_bytes(bytes):
+def predict_audio_from_bytes(bytes):
     #load byte data into a stream
     img_file = io.BytesIO(bytes)
     #encoding the image in base64 to serve in HTML
@@ -87,6 +92,17 @@ def form(request):
 @app.route("/form")
 def redirect_to_homepage(request):
         return RedirectResponse("/")
+
+@app.route("/identificar", methods = ["POST"])
+async def identificar(request):
+    wav = request.files['file']
+    resultado = pickle_model.predict(wav) 
+    return resultado
+    # data = await request.form()
+    # bytes = await (data["file"].read())
+    # return predict_audio_from_bytes(bytes)
+
+       
         
 if __name__ == "__main__":
     if "serve" in sys.argv:
