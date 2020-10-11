@@ -2,8 +2,8 @@ FROM python:3.8-slim-buster
 
 
 RUN apt update
-#RUN apt install -y python3.8
-RUN pip install https://github.com/fastaudio/fastaudio.git
+RUN apt install -y python3.8 gcc
+RUN pip install fastaudio
 
 ADD requirements.txt requirements.txt
 ADD export.pkl export.pkl
