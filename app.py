@@ -8,7 +8,7 @@ from starlette.routing import Route
 from starlette.responses import JSONResponse, HTMLResponse, RedirectResponse
 import uvicorn
 import joblib
-import fastai
+#import fastai
 
 import os
 import sys
