@@ -9,6 +9,8 @@ from starlette.responses import JSONResponse, HTMLResponse, RedirectResponse
 import uvicorn
 import joblib
 #import fastai
+from fastai.vision.all import *
+
 
 import os
 import sys
