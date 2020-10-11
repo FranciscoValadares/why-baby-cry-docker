@@ -10,6 +10,8 @@ import uvicorn
 import joblib
 #import fastai
 from fastai.vision.all import *
+from fastai.vision import *
+
 
 
 import os
@@ -17,12 +19,12 @@ import sys
 import base64 
 
 app = Starlette()
-# path = Path('')
-# learner = load_learner(path)
+path = Path('')
+pickle_model = load_learner(path)
 
-pkl_filename = "export.pkl"
-file = open(pkl_filename,'rb')
-pickle_model = joblib.load(file)
+#pkl_filename = "export.pkl"
+#file = open(pkl_filename,'rb')
+#pickle_model = joblib.load(file)
 
 
 @app.route("/upload", methods = ["POST"])
