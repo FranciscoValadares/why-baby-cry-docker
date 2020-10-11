@@ -2,7 +2,7 @@ FROM python:3.8-slim-buster
 
 
 RUN apt update
-RUN apt install -y python3.8 gcc
+#RUN apt install -y python3.8 gcc
 RUN pip install fastaudio
 
 ADD requirements.txt requirements.txt
