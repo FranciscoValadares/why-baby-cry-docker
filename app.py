@@ -7,10 +7,11 @@ from starlette.routing import Route
 
 from starlette.responses import JSONResponse, HTMLResponse, RedirectResponse
 import uvicorn
-import joblib
+import pickle
+import fastaudio 
 #import fastai
-from fastai.vision.all import *
-from fastai.vision import *
+#from fastai.vision.all import *
+#from fastai.vision import *
 
 
 
@@ -24,7 +25,8 @@ app = Starlette()
 
 pkl_filename = "export.pkl"
 file = open(pkl_filename,'rb')
-pickle_model = joblib.load(file)
+pickle_model = pickle.load(file)
+#pickle_model = joblib.load(file)
 
 
 
