@@ -2,6 +2,6 @@
 starlette==0.13.3
 uvicorn==0.11.3
 git+https://github.com/FranciscoValadares/fastaudio.git
-pickle==3.6.12
+pickle==4.0
 #fastai==2.0.16
 #joblib==0.17.0
