@@ -8,19 +8,24 @@ from starlette.routing import Route
 from starlette.responses import JSONResponse, HTMLResponse, RedirectResponse
 import uvicorn
 import joblib
-import fastai
+#import fastai
+from fastai.vision.all import *
+from fastai.vision import *
+
+
 
 import os
 import sys
 import base64 
 
 app = Starlette()
-# path = Path('')
-# learner = load_learner(path)
+#path = Path('')
+#pickle_model = load_learner(path)
 
 pkl_filename = "export.pkl"
 file = open(pkl_filename,'rb')
 pickle_model = joblib.load(file)
+
 
 
 @app.route("/upload", methods = ["POST"])
@@ -71,9 +76,14 @@ def redirect_to_homepage(request):
 
 @app.route("/identificar", methods = ["POST"])
 async def identificar(request):
+    
     wav = request.files['file']
     resultado = pickle_model.predict(wav) 
     return resultado
+
+
+    
+
     # data = await request.form()
     # bytes = await (data["file"].read())
     # return predict_audio_from_bytes(bytes)

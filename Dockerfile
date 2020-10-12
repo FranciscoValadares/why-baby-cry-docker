@@ -1,10 +1,11 @@
-FROM python:3.6-slim-stretch
+FROM python:3.8-slim-buster
+
 
 RUN apt update
-RUN apt install -y python3-dev gcc
+#RUN apt install -y python3.8 gcc
 
 ADD requirements.txt requirements.txt
-ADD joblib_model.pkl joblib_model.pkl
+ADD export.pkl export.pkl
 ADD app.py app.py
 
 # Install required libraries
